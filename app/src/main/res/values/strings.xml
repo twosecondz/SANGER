@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Coffee App</string>
+    <string name="title_favorite_coffee">Biji Kopi Favorit Anda</string>
+    <string name="description_coffee">Dapatkan semua biji kopi favorit Anda di satu tempat, Anda tinggal memesan dan kami yang mengerjakan sisanya</string>
+    <string name="button_continue">LANJUT</string>
+    <string name="button_skip">Lewati</string>
+</resources>
