@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "401331056371",
+    "project_id": "sanger-2025-cbcda",
+    "storage_bucket": "sanger-2025-cbcda.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401331056371:android:c15eb199a0997c401c1186",
+        "android_client_info": {
+          "package_name": "com.example.sangerfinal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8t8SzkGC0af4kFTonHCvgt6jlcPdOtAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
