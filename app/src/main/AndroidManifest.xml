@@ -62,7 +62,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".OnboardingActivity"
             android:exported="false" />
     </application>
 
