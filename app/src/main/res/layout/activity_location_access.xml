@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="24dp">
+
+    <!-- Location Icon Placeholder -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:id="@+id/locationIconPlaceholder"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:background="@drawable/location_placeholder_background"
+        android:layout_marginBottom="60dp" />
+
+    <!-- Access Location Button -->
+    <Button
+        android:id="@+id/btnAksesLokasi"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="AKSES LOKASI"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:background="@drawable/button_brown_background"
+        android:drawableEnd="@drawable/ic_location_pin"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Description Text -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SAGER AKAN MENGAKSES LOKASI ANDA\nHANYA SAAT MENGGUNAKAN APLIKASI"
+        android:textSize="14sp"
+        android:textColor="@color/gray_text"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginBottom="40dp" />
+
+</LinearLayout>
