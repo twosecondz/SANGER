@@ -26,15 +26,6 @@ Aplikasi Sanger dilengkapi dengan berbagai fitur untuk memberikan pengalaman pen
     * Konfirmasi Keberhasilan Pembayaran (`PaymentSuccessActivity`).
 * **Integrasi Peta (Direncanakan):** Meminta akses lokasi untuk fitur pengantaran.
 
-## 🖼️ Screenshots
-
-<p align="center">
-  <img src="docs/screenshot_1.png" width="200" />
-  <img src="docs/screenshot_2.png" width="200" />
-  <img src="docs/screenshot_3.png" width="200" />
-</p> 
-
-
 ## 🛠️ Teknologi yang Digunakan
 
 Proyek ini dibangun menggunakan teknologi dan library modern dalam ekosistem pengembangan Android.
