@@ -2,6 +2,7 @@ package com.example.sangerfinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -66,12 +67,13 @@ public class PaymentMethodActivity extends AppCompatActivity {
         btnBayarKonfirmasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Add navigation to payment success
-                // Example: Intent intent = new Intent(PaymentMethodActivity.this, PaymentSuccessActivity.class);
-                // startActivity(intent);
-                android.widget.Toast.makeText(PaymentMethodActivity.this, "Navigate to Payment Success - Add navigation logic", android.widget.Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(PaymentMethodActivity.this, PaymentSuccessActivity.class);
+                startActivity(intent);
+                // Optional: Tambahkan finish() jika ingin menutup PaymentMethodActivity setelah navigasi
+                // finish();
             }
         });
+
     }
 
     private void selectPaymentMethod(String method) {

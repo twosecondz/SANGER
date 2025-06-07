@@ -61,6 +61,27 @@ class ProfilActivity : AppCompatActivity() {
             startActivity(intent)
             finish() // Optionally finish the current activity to remove it from the stack
         }
+
+        // Set up cart menu click
+        val layoutCart = findViewById<LinearLayout>(R.id.layout_cart)
+        layoutCart.setOnClickListener {
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Set up location menu click
+        val layoutLocation = findViewById<LinearLayout>(R.id.layout_location)
+        layoutLocation.setOnClickListener {
+            val intent = Intent(this, LocationAccessActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Set up payment menu click
+        val layoutPayment = findViewById<LinearLayout>(R.id.layout_payment)
+        layoutPayment.setOnClickListener {
+            val intent = Intent(this, PaymentMethodActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {

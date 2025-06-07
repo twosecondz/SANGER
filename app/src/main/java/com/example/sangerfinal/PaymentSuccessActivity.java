@@ -2,6 +2,7 @@ package com.example.sangerfinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,10 +20,12 @@ public class PaymentSuccessActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: Add navigation to order tracking
-                // Example: Intent intent = new Intent(PaymentSuccessActivity.this, OrderTrackingActivity.class);
-                // startActivity(intent);
+                 Intent intent = new Intent(PaymentSuccessActivity.this, ProfilActivity.class);
+                 startActivity(intent);
                 android.widget.Toast.makeText(PaymentSuccessActivity.this, "Navigate to Order Tracking - Add navigation logic", android.widget.Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 }
