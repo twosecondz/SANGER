@@ -40,8 +40,10 @@ class InfoPersonalActivity : AppCompatActivity() {
         // Back button functionality
         val btnBack = findViewById<ImageButton>(R.id.btn_back)
         btnBack.setOnClickListener {
-            // This will navigate back to the previous activity in the stack
-            onBackPressed()
+            // --- PERUBAHAN DI SINI ---
+            // Mengganti onBackPressed() dengan finish() yang lebih modern.
+            // Efeknya sama persis: menutup halaman ini dan kembali.
+            finish()
         }
 
         // Edit Profile button click listener
@@ -58,6 +60,7 @@ class InfoPersonalActivity : AppCompatActivity() {
         loadUserData()  // Reload user data every time the activity is resumed
     }
     private fun loadUserData() {
+        // ... TIDAK ADA PERUBAHAN SAMA SEKALI PADA FUNGSI INI ...
         val currentUser = auth.currentUser
 
         if (currentUser != null) {

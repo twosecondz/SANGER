@@ -1,4 +1,4 @@
-package com.example.sanger;
+package com.example.sangerfinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -7,12 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Intro2Activity extends AppCompatActivity {
+public class Intro3Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intro2);
+        setContentView(R.layout.activity_intro3);
 
         Button btnLanjut = findViewById(R.id.btnLanjut);
         TextView tvLewati = findViewById(R.id.tvLewati);
@@ -20,7 +20,7 @@ public class Intro2Activity extends AppCompatActivity {
         btnLanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intro2Activity.this, Intro3Activity.class);
+                Intent intent = new Intent(Intro3Activity.this, Intro4Activity.class);
                 startActivity(intent);
                 finish();
             }

@@ -1,32 +1,52 @@
 package com.example.sangerfinal
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import androidx.activity.enableEdgeToEdge
+import android.os.Looper
+import android.text.Html
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class SplashActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         supportActionBar?.hide()
         setContentView(R.layout.activity_splash)
 
-        // Set padding for edge to edge
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        // Mengatur teks logo yang berwarna (dari kode Anda)
+        val logoText = findViewById<TextView>(R.id.tvSangerLogo)
+        logoText.text = Html.fromHtml(getString(R.string.app_name_styled), Html.FROM_HTML_MODE_LEGACY)
 
-        // Transition to LoginActivity after 3 seconds
-        Handler().postDelayed({
-            val intent = Intent(this, LoginActivity::class.java)
+        // Handler untuk menunda navigasi
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            // ===== LOGIKA KEPUTUSAN DIMULAI DI SINI =====
+
+            // 1. Buka "buku catatan" bernama "AppPrefs"
+            val sharedPrefs = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+
+            // 2. Cek apakah ada catatan "HAS_SEEN_INTRO". Jika tidak ada, anggap false.
+            val hasSeenIntro = sharedPrefs.getBoolean("HAS_SEEN_INTRO", false)
+
+            // 3. Tentukan tujuan berdasarkan catatan
+            val destinationActivity = if (hasSeenIntro) {
+                // Jika sudah pernah lihat intro, tujuan ke LoginActivity
+                LoginActivity::class.java
+            } else {
+                // Jika belum pernah (pengguna baru), tujuan ke Intro1Activity
+                Intro1Activity::class.java
+            }
+
+            // 4. Buat Intent ke tujuan yang sudah ditentukan
+            val intent = Intent(this, destinationActivity)
             startActivity(intent)
-            finish()
-        }, 3000)  // 3000 milliseconds for splash duration
+            finish() // Hapus SplashActivity dari back stack
+
+            // =================================================
+
+        }, 2000)  // Durasi splash 2 detik sudah cukup
     }
 }

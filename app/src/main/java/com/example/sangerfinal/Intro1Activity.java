@@ -1,4 +1,4 @@
-package com.example.sanger;
+package com.example.sangerfinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;

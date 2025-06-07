@@ -8,8 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -27,7 +28,10 @@ class EditProfilActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var btnChangeImage: ImageButton
     private lateinit var storage: FirebaseStorage
-    private lateinit var profilePicture : ImageView
+    private lateinit var profilePicture: ImageView
+
+    // --- PERUBAHAN 1: Deklarasi "Peluncur" untuk Activity Result API ---
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,13 +51,27 @@ class EditProfilActivity : AppCompatActivity() {
         btnChangeImage = findViewById(R.id.btn_edit_photo)
         profilePicture = findViewById(R.id.img_profile)
 
+        // --- PERUBAHAN 2: Mendaftarkan Callback untuk Activity Result API ---
+        // Kode ini menggantikan fungsi onActivityResult yang lama.
+        // Ini mendefinisikan apa yang harus dilakukan SETELAH gambar dipilih.
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val imageUri = result.data?.data
+                if (imageUri != null) {
+                    Log.d("Image URI", imageUri.toString())
+                    // Memanggil fungsi upload yang sama seperti sebelumnya, tidak ada yang diubah di sini.
+                    uploadProfileImage(imageUri)
+                }
+            }
+        }
 
         // Load current user data from Firestore
         loadUserData()
 
-        // Set onClickListener for the back button
+        // --- PERUBAHAN 3: Memperbaiki Tombol Kembali ---
+        // Menggunakan finish() adalah cara modern dan langsung untuk menutup activity.
         btnBack.setOnClickListener {
-            onBackPressed()
+            finish()
         }
 
         // Set onClickListener for the "SIMPAN" button
@@ -70,47 +88,35 @@ class EditProfilActivity : AppCompatActivity() {
 
     private fun pickImage() {
         val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"  // Filter for image files
-        startActivityForResult(intent, IMAGE_PICK_CODE)
+        intent.type = "image/*"
+        // --- PERUBAHAN 4: Menggunakan "Peluncur" yang baru ---
+        imagePickerLauncher.launch(intent)
     }
 
-    private val IMAGE_PICK_CODE = 1000
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            val imageUri = data?.data
-            // Get the URI of the selected image
-            Log.d("Image URI", imageUri.toString())
-            uploadProfileImage(imageUri)  // Upload the image to Firebase Storage
-        }
-    }
+    // --- Kode lama yang DIHAPUS ---
+    // private val IMAGE_PICK_CODE = 1000
+    // override fun onActivityResult(...) { ... }
 
     private fun uploadProfileImage(imageUri: Uri?) {
+        // ... TIDAK ADA PERUBAHAN SAMA SEKALI PADA FUNGSI INI ...
         if (imageUri != null) {
             val storageRef = FirebaseStorage.getInstance().reference.child("profile_images/${auth.currentUser?.uid}")
-            val uploadTask = storageRef.putFile(imageUri)  // Upload the selected image to Firebase Storage
+            val uploadTask = storageRef.putFile(imageUri)
 
             uploadTask.addOnSuccessListener {
-                // Get the download URL of the uploaded image
                 storageRef.downloadUrl.addOnSuccessListener { uri ->
                     val profileImageUrl = uri.toString()
-
-                    // Update Firestore with the new profile image URL
                     val userId = auth.currentUser?.uid
                     if (userId != null) {
                         db.collection("users").document(userId)
-                            .update("profileImageUrl", profileImageUrl)  // Update Firestore with new image URL
+                            .update("profileImageUrl", profileImageUrl)
                             .addOnSuccessListener {
                                 Toast.makeText(this, "Profile image updated!", Toast.LENGTH_SHORT).show()
-
-                                // Update the profile picture in the UI immediately after uploading
                                 Glide.with(this)
                                     .load(profileImageUrl)
-                                    .placeholder(R.drawable.default_avatar)  // Default image while loading
-                                    .error(R.drawable.default_avatar)  // Error image
-                                    .into(profilePicture)  // Set the ImageView with the new profile image
+                                    .placeholder(R.drawable.default_avatar)
+                                    .error(R.drawable.default_avatar)
+                                    .into(profilePicture)
                             }
                             .addOnFailureListener { e ->
                                 Toast.makeText(this, "Error updating profile image: $e", Toast.LENGTH_SHORT).show()
@@ -125,11 +131,10 @@ class EditProfilActivity : AppCompatActivity() {
     }
 
     private fun loadUserData() {
+        // ... TIDAK ADA PERUBAHAN SAMA SEKALI PADA FUNGSI INI ...
         val currentUser = auth.currentUser
-
         if (currentUser != null) {
             val userId = currentUser.uid
-            // Retrieve user data from Firestore
             db.collection("users")
                 .document(userId)
                 .get()
@@ -139,8 +144,6 @@ class EditProfilActivity : AppCompatActivity() {
                         val name = document.getString("nama")
                         val email = document.getString("email")
                         val biodata = document.getString("biodata")
-
-                        // Load profile picture using Glide if URL exists
                         if (!pictureUrl.isNullOrEmpty()) {
                             Glide.with(this)
                                 .load(pictureUrl)
@@ -148,19 +151,16 @@ class EditProfilActivity : AppCompatActivity() {
                                 .error(R.drawable.default_avatar)
                                 .into(profilePicture)
                         }
-
                         if(name != null){
                             etNamaLengkap.setText(name)
                         }else{
                             Toast.makeText(this, "Nama tidak ditemukan!", Toast.LENGTH_SHORT).show()
                         }
-
                         if( email != null){
                             etEmail.setText(email)
                         }else{
                             Toast.makeText(this, "Email tidak ditemukan!", Toast.LENGTH_SHORT).show()
                         }
-
                         if(biodata!= null) {
                             etBiodata.setText(biodata)
                         }
@@ -175,33 +175,25 @@ class EditProfilActivity : AppCompatActivity() {
     }
 
     private fun saveUserData() {
+        // ... TIDAK ADA PERUBAHAN SAMA SEKALI PADA FUNGSI INI ...
         val currentUser = auth.currentUser
-
         if (currentUser != null) {
             val userId = currentUser.uid
-
-            // Get the updated values from EditText fields
             val updatedName = etNamaLengkap.text.toString()
             val updatedEmail = etEmail.text.toString()
             val updatedBiodata = etBiodata.text.toString()
-
-            // Check if the fields are not empty
             if (updatedName.isNotEmpty() && updatedEmail.isNotEmpty() && updatedBiodata.isNotEmpty()) {
-                // Create a map with the updated values
                 val userUpdates = hashMapOf(
                     "nama" to updatedName,
                     "email" to updatedEmail,
                     "biodata" to updatedBiodata
                 )
-
-                // Update the data in Firestore
                 db.collection("users")
                     .document(userId)
                     .update(userUpdates as Map<String, Any>)
                     .addOnSuccessListener {
                         Toast.makeText(this, "Data berhasil disimpan!", Toast.LENGTH_SHORT).show()
-                        // Optionally, navigate back or show a success message
-                        finish() // Close the activity after saving
+                        finish()
                     }
                     .addOnFailureListener { e ->
                         Toast.makeText(this, "Gagal menyimpan data: $e", Toast.LENGTH_SHORT).show()
@@ -211,6 +203,4 @@ class EditProfilActivity : AppCompatActivity() {
             }
         }
     }
-
-
 }

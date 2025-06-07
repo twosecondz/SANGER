@@ -1,4 +1,4 @@
-package com.example.sanger;
+package com.example.sangerfinal;
 
 import android.os.Bundle;
 
